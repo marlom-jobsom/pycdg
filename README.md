@@ -14,7 +14,7 @@ working on softwares projects to **generate views** to make easy to follow-up th
 pipenv install
 
 cd frontend
-yarn install
+yarn
 ```
 
 ## Run for development with hot reload
