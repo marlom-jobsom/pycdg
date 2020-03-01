@@ -6,21 +6,25 @@
       clipped
     >
       <v-list dense>
-        <v-list-item
+        <router-link
+          tag="span"
           v-for="item in listItems"
           :key="item.text"
-          link
+          :to="item.link"
         >
-        <!-- TODO: Add the router link in the list item  -->
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>
-              {{ item.text }}
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-list-item
+            link
+          >
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>
+                {{ item.text }}
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
       </v-list>
     </v-navigation-drawer>
 
@@ -44,8 +48,8 @@
     </v-app-bar>
 
     <v-content>
-      <v-container class="fill-height">
-        <!-- TODO: Add vue router here -->
+      <v-container>
+        <router-view></router-view>
       </v-container>
     </v-content>
   </v-app>
@@ -58,20 +62,9 @@ export default {
     return {
       drawer: true,
       listItems: [
-        {icon: 'home', text: 'Home', link: '/'}
+        {icon: 'home', text: 'Home', link: '/'},
       ]
     }
   }
 }
 </script>
-
-<style>
-    #app {
-        font-family: Avenir, Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 60px;
-    }
-</style>
