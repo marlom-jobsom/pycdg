@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
+    "typeface-roboto": "^0.0.75",
     "vue": "^2.6.11",
     "vuetify": "^2.2.15"
   },
@@ -36,7 +37,8 @@
     "webpack": "^4.41.6",
     "webpack-bundle-tracker": "^0.4.3",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.10.3",
+    "material-design-icons-iconfont": "^5.0.1",
   },
   "eslintConfig": {
     "root": true,
