@@ -7,21 +7,17 @@
     >
       <v-list dense>
         <router-link
-          tag="span"
           v-for="item in listItems"
           :key="item.text"
+          tag="span"
           :to="item.link"
         >
-          <v-list-item
-            link
-          >
+          <v-list-item link>
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>
-                {{ item.text }}
-              </v-list-item-title>
+              <v-list-item-title>{{ item.text }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </router-link>
@@ -44,12 +40,13 @@
         align="center"
         style="max-width: 650px"
       >
+        <!-- toolbar options -->
       </v-row>
     </v-app-bar>
 
     <v-content>
       <v-container>
-        <router-view></router-view>
+        <router-view />
       </v-container>
     </v-content>
   </v-app>
@@ -61,9 +58,7 @@ export default {
   data() {
     return {
       drawer: true,
-      listItems: [
-        {icon: 'home', text: 'Home', link: '/'},
-      ]
+      listItems: [{ icon: 'home', text: 'Home', link: '/' }]
     }
   }
 }

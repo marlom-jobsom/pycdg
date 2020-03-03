@@ -24,42 +24,28 @@
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
+    "deepmerge": "^4.2.2",
     "eslint": "^6.7.2",
+    "eslint-loader": "^3.0.3",
     "eslint-plugin-vue": "^6.1.2",
+    "fibers": "^4.0.2",
     "file-loader": "^5.1.0",
     "html-loader": "^0.5.5",
+    "material-design-icons-iconfont": "^5.0.1",
     "mini-css-extract-plugin": "^0.9.0",
+    "sass": "^1.26.2",
     "sass-loader": "^8.0.2",
     "url-loader": "^3.0.0",
+    "vue-loader": "^15.9.0",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.11",
-    "vue-loader": "^15.9.0",
     "vuetify-loader": "^1.4.3",
     "webpack": "^4.41.6",
     "webpack-bundle-tracker": "^0.4.3",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
-    "material-design-icons-iconfont": "^5.0.1",
+    "webpack-dev-server": "^3.10.3"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {
-      "no-console": "warn",
-      "semi": [2, "never"],
-      "indent": ["error", 2],
-      "quotes": ["error", "single"]
-    }
-  },
+  "eslintConfig": {},
   "browserslist": [
     "> 1%",
     "last 2 versions"

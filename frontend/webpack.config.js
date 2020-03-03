@@ -1,9 +1,10 @@
-const path = require('path');
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const BundleTracker = require('webpack-bundle-tracker');
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
-const {VueLoaderPlugin} = require('vue-loader');
+const path = require('path')
+const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const BundleTracker = require('webpack-bundle-tracker')
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
+const {VueLoaderPlugin} = require('vue-loader')
+const EslintConfig = require('./.eslintrc')
 
 /*
 * All configuration properties for webpack can be found on:
@@ -11,155 +12,161 @@ const {VueLoaderPlugin} = require('vue-loader');
 *
 * */
 module.exports = {
-    /*
-    * Development: Enables NamedChunksPlugin and NamedModulesPlugin
-    * https://webpack.js.org/configuration/mode/#mode-development
-    * */
-    mode: 'development',
+  /**
+   * Development: Enables NamedChunksPlugin and NamedModulesPlugin
+   * https://webpack.js.org/configuration/mode/#mode-development
+   */
+  mode: 'development',
 
-    /*
-    * The point or points where to start the application bundling process. If an array is passed then all items will be processed.
-    *
-    * Simple rule: one entry point per HTML page. SPA: one entry point, MPA: multiple entry points.
-    * */
-    entry: [
-        './src/main.js',
-    ],
+  /**
+   * The point or points where to start the application bundling process. If an array is passed then all items will be processed.
+   * Simple rule: one entry point per HTML page. SPA: one entry point, MPA: multiple entry points.
+   */
+  entry: [
+    './src/main.js',
+  ],
 
-    /*
-    * Bundles output location properties
-    * */
-    output: {
-        path: path.resolve(__dirname, './bundles'),
-        publicPath: 'http://localhost:3000/bundles/',
-        filename: 'bundle.js',
-    },
+  /**
+   * Bundles output location properties
+   */
+  output: {
+    path: path.resolve(__dirname, './bundles'),
+    publicPath: 'http://localhost:3000/bundles/',
+    filename: 'bundle.js',
+  },
 
-    /*
-    * These options determine how the different types of modules within a project will be treated.
-    * */
-    module: {
-        rules: [
-            {
-                test: /\.scss$/,
-                use: [MiniCssExtractPlugin.loader, 'sass-loader']
+  /**
+   * These options determine how the different types of modules within a project will be treated.
+   */
+  module: {
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.(js|vue)$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          EslintConfig
+        }
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+      },
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'sass-loader']
+      },
+      {
+        test: /\.s(c|a)ss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            // Requires sass-loader@^7.0.0
+            options: {
+              implementation: require('sass'),
+              fiber: require('fibers'),
+              indentedSyntax: true // optional
             },
-            {
-                test: /\.css$/,
-                use: [
-                    'vue-style-loader',
-                    'css-loader',
-                    {
-                        loader: 'sass-loader',
-                        // Requires sass-loader@^7.0.0
-                        options: {
-                            implementation: require('sass'),
-                            fiber: require('fibers'),
-                            indentedSyntax: true // optional
-                        },
-                        // Requires sass-loader@^8.0.0
-                        options: {
-                            implementation: require('sass'),
-                            sassOptions: {
-                                fiber: require('fibers'),
-                                indentedSyntax: true // optional
-                            },
-                        },
-                    },
-                ],
+            // Requires sass-loader@^8.0.0
+            options: {
+              implementation: require('sass'),
+              sassOptions: {
+                fiber: require('fibers'),
+                indentedSyntax: true // optional
+              },
             },
-            {
-                test: /\.vue$/,
-                loader: 'vue-loader',
-            },
-            {
-                test: /\.jsx?$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/
-            },
-            {
-                test: /\.(png|jpe?g|gif)$/i,
-                include: path.join(__dirname, 'src'),
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]',
-                    esModule: false,
-                },
-            },
-            {
-                test: /\.(woff|woff2|eot|ttf|svg)$/,
-                use: 'url-loader?limit=25000'
-            },
+          },
         ],
-    },
-
-    /*
-    * All devServer properties can be found inside this page:
-    * https://webpack.js.org/configuration/dev-server/
-    *
-    * */
-    devServer: {
-        // clientLogLevel: Log level to be show within the console.
-        clientLogLevel: 'warn',
-
-        // hot: Enable webpack's Hot Module Replacement feature
-        hot: true,
-
-        // inline:  This means that a script will be inserted in your bundle to take care of live reloading, and build messages will appear in the browser console
-        inline: false,
-
-        // compress: Enable gzip compression for everything served
-        compress: true,
-
-        // historyApiFallback: index.html page will likely have to be served in place of any 404 responses
-        historyApiFallback: true,
-
-        // headers: desired headers while serving bundles
-        headers: {
-            'Access-Control-Allow-Origin': '*'
+      },
+      {
+        test: /\.css$/,
+        use: [
+            'vue-style-loader',
+            'css-loader'
+        ],
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+      },
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        include: path.join(__dirname, 'src'),
+        loader: 'file-loader',
+        options: {
+            name: '[name].[ext]',
+            esModule: false,
         },
-
-        // host: default development host
-        host: '0.0.0.0',
-
-        // port: default development port
-        port: 3000,
-    },
-
-    /*
-    * Plugins to customize the way webpack bundles files.
-    * */
-    plugins: [
-        // Permits Hot reload over the webpack bundles. Should not be used on production by any means.
-        new webpack.HotModuleReplacementPlugin(),
-
-        // Don't reload if there is an error
-        new webpack.NoEmitOnErrorsPlugin(),
-
-        // Spits out some stats about webpack compilation process to a file
-        new BundleTracker({
-            path: __dirname,
-            filename: './webpack-stats.json',
-        }),
-
-        // Extract css separately from each JS file
-        new MiniCssExtractPlugin(),
-
-        // Enable vue files loader
-        new VueLoaderPlugin(),
-
-        // Enable vuetify loader
-        new VuetifyLoaderPlugin(),
-
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|svg)$/,
+        use: 'url-loader?limit=25000'
+      },
     ],
+  },
 
-    /*
-    * Auto generated by vue.js
-    * */
-    resolve: {
-        alias: {
-            'vue$': 'vue/dist/vue.esm.js',
-            '@': path.join(__dirname, 'src'),
-        },
+  /**
+   * All devServer properties can be found inside this page:
+   * https://webpack.js.org/configuration/dev-server/
+   */
+  devServer: {
+    // clientLogLevel: Log level to be show within the console.
+    clientLogLevel: 'warn',
+    // hot: Enable webpack's Hot Module Replacement feature
+    hot: true,
+    // inline:  This means that a script will be inserted in your bundle to take care of live reloading, and build messages will appear in the browser console
+    inline: false,
+    // compress: Enable gzip compression for everything served
+    compress: true,
+    // historyApiFallback: index.html page will likely have to be served in place of any 404 responses
+    historyApiFallback: true,
+    // headers: desired headers while serving bundles
+    headers: {
+      'Access-Control-Allow-Origin': '*'
     },
-};
+    // host: default development host
+    host: '0.0.0.0',
+    // port: default development port
+    port: 3000,
+  },
+
+  /**
+   * Plugins to customize the way webpack bundles files.
+   */
+  plugins: [
+    // Permits Hot reload over the webpack bundles. Should not be used on production by any means.
+    new webpack.HotModuleReplacementPlugin(),
+    // Don't reload if there is an error
+    new webpack.NoEmitOnErrorsPlugin(),
+    // Spits out some stats about webpack compilation process to a file
+    new BundleTracker({
+        path: __dirname,
+        filename: './webpack-stats.json',
+    }),
+    // Extract css separately from each JS file
+    new MiniCssExtractPlugin(),
+    // Enable vue files loader
+    new VueLoaderPlugin(),
+    // Enable vuetify loader
+    new VuetifyLoaderPlugin(),
+  ],
+
+  /**
+   *  Auto generated by vue.js
+   */
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': path.join(__dirname, 'src'),
+    },
+  },
+}
